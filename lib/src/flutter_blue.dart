@@ -40,7 +40,7 @@ class FlutterBlue {
   Stream<bool> get isScanning => _isScanning.stream;
 
   BehaviorSubject<List<ScanResult>> _scanResults = BehaviorSubject.seeded([]);
-  
+
   /// Returns a stream that is a list of [ScanResult] results while a scan is in progress.
   ///
   /// The list emitted is all the scanned results as of the last initiated scan. When a scan is
@@ -74,6 +74,12 @@ class FlutterBlue {
         .then((p) => p.map((d) => BluetoothDevice.fromProto(d)).toList());
   }
 
+  /// Sets a unique id (required on iOS for restoring app on background-scan)
+  /// should be called before any other methods.
+  Future setUniqueId(String uniqueid) => _channel.invokeMethod('setUniqueId', uniqueid.toString());
+
+  /// Starts a scan for Bluetooth Low Energy devices
+  /// Timeout closes the stream after a specified [Duration]
   _setLogLevelIfAvailable() async {
     if (await isAvailable) {
       // Send the log level to the underlying platforms.
@@ -145,12 +151,12 @@ class FlutterBlue {
   }
 
   /// Starts a scan and returns a future that will complete once the scan has finished.
-  /// 
+  ///
   /// Once a scan is started, call [stopScan] to stop the scan and complete the returned future.
   ///
   /// timeout automatically stops the scan after a specified [Duration].
   ///
-  /// To observe the results while the scan is in progress, listen to the [scanResults] stream, 
+  /// To observe the results while the scan is in progress, listen to the [scanResults] stream,
   /// or call [scan] instead.
   Future startScan({
     ScanMode scanMode = ScanMode.lowLatency,

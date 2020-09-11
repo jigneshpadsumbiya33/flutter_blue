@@ -4,13 +4,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_blue'
-  s.version          = '0.0.1'
+  s.version          = '0.7.1'
+  s.source           = { :git => 'https://github.com/pauldemarco/flutter_blue.git', :tag => "v#{s.version}" }
   s.summary          = 'Bluetooth Low Energy plugin for Flutter.'
   s.description      = <<-DESC
-Bluetooth Low Energy plugin for Flutter.
+FlutterBlue is a bluetooth plugin for Flutter, a new mobile SDK to help developers build modern apps for iOS and Android.
                        DESC
   s.homepage         = 'https://github.com/pauldemarco/flutter_blue'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :file => '../LICENSE', :type => 'BSD' }
   s.author           = { 'Paul DeMarco' => 'paulmdemarco@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*', 'gen/**/*'
